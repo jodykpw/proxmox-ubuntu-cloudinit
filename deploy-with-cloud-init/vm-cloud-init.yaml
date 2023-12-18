@@ -1,0 +1,24 @@
+#cloud-config
+hostname: devbox-1
+manage_etc_hosts: true
+fqdn: devbox-1.domain.com
+timezone: Europe/London
+users:
+  - name: ubuntu
+    ssh-authorized-keys:
+      - ssh-ed25519 xxxxxxxxx username@hostname
+      - ssh-ed25519 xxxxxxxxx username@hostname
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    groups: sudo
+    shell: /bin/bash
+chpasswd:
+  ## Forcing user to change the default password at first login
+  expire: true
+  list: |
+    ubuntu:password
+package_upgrade: true
+packages:
+  - nano
+  - vim
+  - git
+  - ansible-core
