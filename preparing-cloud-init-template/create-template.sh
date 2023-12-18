@@ -7,6 +7,15 @@ then
  wget $IMAGE_URL
 fi
 
+# Set of tools for accessing and modifying virtual machine (VM) disk images.
+apt install libguestfs-tools -y
+
+# Install the QEMU Guest Agent in a virtual machine image. 
+virt-customize -a $IMAGE_FILE --install qemu-guest-agent
+
+# Rename the file .img to QEMU Copy-On-Write (qcow2) image files
+mv $IMAGE_FILE ${IMAGE_FILE%.img}.qcow2
+
 # Create  a virtual machine.
 qm create $VMID --name $NAME --memory $MEMORY --net0 virtio,bridge=vmbr0 --cores $CORES --sockets $SOCKETS --cpu cputype=$CPUTYPE --description $DESCRIPTION
 
@@ -14,7 +23,7 @@ qm create $VMID --name $NAME --memory $MEMORY --net0 virtio,bridge=vmbr0 --cores
 qm set $VMID --ostype $OSTYPE
 
 # Import an external disk image as an unused disk in a VM. The image format has to be supported by qemu-img(1).
-qm importdisk $VMID $IMAGE_FILE $STORAGE
+qm importdisk $VMID ${IMAGE_FILE%.img}.qcow2 $STORAGE
 
 # Attaching the import disk it to a SCSI drive
 if [ "$STORAGETYPE" = "nfs" ]; then
@@ -37,5 +46,5 @@ qm template $VMID
 # Clean up.
 if [ "$DELETE_IMAGE" = "true" ] ; then
    # Delete Cloud Init Image
-   rm $IMAGE_FILE
+   rm ${IMAGE_FILE%.img}.qcow2
 fi
