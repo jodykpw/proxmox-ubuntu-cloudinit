@@ -1,6 +1,6 @@
-# 📕 Cloud-Init Automation Script for Ubuntu Noble N on Proxmox
+# 📕 Cloud-Init Automation Script for Ubuntu Jammy Jellyfish on Proxmox
 
-This repository contains an automation script and templates for deploying Noble N instances on Proxmox using Cloud-Init. By utilising Cloud-Init in Proxmox, you can automate and customize the initial configuration of your virtual machines, making it easier to deploy and manage them at scale.
+This repository contains an automation script and templates for deploying Jammy Jellyfish instances on Proxmox using Cloud-Init. By utilising Cloud-Init in Proxmox, you can automate and customize the initial configuration of your virtual machines, making it easier to deploy and manage them at scale.
 
 ## 🚀 Deployment Steps
 
